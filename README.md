@@ -4,19 +4,18 @@ A plugin that allows you to authenticate users based on their Discord user ID or
 
 ## Installation
 
-1. **Install this plugin:**
-
-```bash
-cd /opt/etherpad-lite
-pnpm add https://github.com/rempairamore/ep_discordauth.git
-```
-
-2. **Setup a Discord Application:**
+1. **Setup a Discord Application:**
    - Go to [Discord Developer Portal](https://discord.com/developers/applications).
    - Create a new Application.
    - Go to **OAuth2** -> **General**.
    - Add a Redirect Redirect: `https://YOUR-ETHERPAD-DOMAIN.COM/discordauth/callback`
    - Copy the **Client ID** and **Client Secret**.
+
+2. **Install this plugin:**
+
+Install the old plugin from `https://YOUR-ETHERPAD-DOMAIN.COM/admin/plugins`
+
+Replace `/opt/etherpad-lite/src/plugin_packages/ep_discordauth/index.js` with the one inside this repo.
 
 3. **Update settings.json:**
    Add the following configuration to your `settings.json` file (ensure it's at the root level of the JSON object):
@@ -47,6 +46,10 @@ pnpm add https://github.com/rempairamore/ep_discordauth.git
     }
   }
 }
+```
+
+
+4. **Restart Etherpad-lite**
 
 
 Any persons listed in the `individuals` or in one of the `roles` list of one of
