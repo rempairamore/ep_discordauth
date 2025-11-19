@@ -1,58 +1,53 @@
-ep_discordauth
-==============
+# ep_discordauth
 
-A plugin that allows you to authenticate users based on their Discord user id or
-their membership in guilds (servers) and roles in those guilds.
+A plugin that allows you to authenticate users based on their Discord user ID or their membership in guilds (servers) and roles in those guilds.
 
-# Installing
+## Installation
 
-1. Install this plugin:
+1. **Install this plugin:**
 
-Cloneing this repository from github
+```bash
+cd /opt/etherpad-lite
+pnpm add https://github.com/rempairamore/ep_discordauth.git
+```
 
-    pnpm install PATH/TO/THIS/FOLDER
+2. **Setup a Discord Application:**
+   - Go to [Discord Developer Portal](https://discord.com/developers/applications).
+   - Create a new Application.
+   - Go to **OAuth2** -> **General**.
+   - Add a Redirect Redirect: `https://YOUR-ETHERPAD-DOMAIN.COM/discordauth/callback`
+   - Copy the **Client ID** and **Client Secret**.
 
-or
+3. **Update settings.json:**
+   Add the following configuration to your `settings.json` file (ensure it's at the root level of the JSON object):
 
-    pnpm plugins install ep_discordauth
-
-2. Setup a Discord Application
-
-You will need to set up an Application in the Discord Developers Portal at
-
-    discord.com/developers
-
-From the developer portal grab your applications OAuth2 Client ID and Client Secret
-
-3. Update settings.json
-
-In your settings you will need to set/update the following:
-
-
-    "requireAuthentication": true,
-    "requireAuthorization": true,
-    "ep_discordauth": {
-      "client_id":"YOUR_APPS_CLIENT_IDFROM_STEP_2",
-      "client_secret":"YOUR_APPS_CLIENT_SECRET_FROM_STEP_2",
-      "authorizedUsers": {
-        "individuals": ["discord_id_of_accepted_users"],
-        "guilds":{
-          "guild_id_of_accepted_users" : { "roles" : ["ids_of_roles_to_grant_permissions_to"] }
-        }
-      },
-      "admins":{
-        "individuals":["discord_id_of_admin_users"],
-         "guilds":{
-           "guild_id_of_admin_users" : { "roles" : ["ids_of_roles_to_grant_permission_to"] }
-         }
-      },
-      "excluded":{
-        "individuals":["discod_id_of_banned_users"],
-        "guilds":{
-            "guild_id_of_banned_users": {"roles":["ids_of_roles_to_revoke_all_permissions_from"]}
-        }
-      }
+```json
+"requireAuthentication": true,
+"requireAuthorization": true,
+"ep_discordauth": {
+  "client_id": "YOUR_CLIENT_ID",
+  "client_secret": "YOUR_CLIENT_SECRET",
+  "callback_url": "https://your-etherpad-domain.com/discordauth/callback",
+  "authorizedUsers": {
+    "individuals": ["123456789012345678"],
+    "guilds": {
+      "GUILD_ID": { "roles": ["ROLE_ID"] }
     }
+  },
+  "admins": {
+    "individuals": ["ADMIN_DISCORD_ID"],
+    "guilds": {
+       "GUILD_ID": { "roles": ["ADMIN_ROLE_ID"] }
+    }
+  },
+  "excluded": {
+    "individuals": ["BANNED_USER_ID"],
+    "guilds": {
+        "GUILD_ID": { "roles": ["BANNED_ROLE_ID"] }
+    }
+  }
+}
+
 
 Any persons listed in the `individuals` or in one of the `roles` list of one of
 the guilds listed under `authorizedUsers` will be able to access pads on etherpad.
@@ -63,4 +58,3 @@ To get the discord ids of users, guilds and roles, activate "Developer Mode"
 ([Settings]->[Advanced]->[Developer mode]) in your discord client. If you right
 click a user, guild or role (in the guilds server options) you can copy it's ID
 from there.
-
