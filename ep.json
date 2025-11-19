@@ -1,7 +1,7 @@
 {
     "parts": [
         {
-            "name": "discordauth",
+            "name": "discordauth2",
             "hooks": {
                 "expressCreateServer" : "ep_discordauth/index:expressCreateServer",
                 "authenticate" : "ep_discordauth/index:authenticate",
